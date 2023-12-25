@@ -48,20 +48,20 @@ class _BaseState extends State<Base> {
                 tabBackgroundColor: mainColor,
                 gap: 8,
                 padding: const EdgeInsets.all(16),
-                tabs: const [
+                tabs: [
                   GButton(
-                    icon: Iconsax.home_24,
+                    icon: _selectedIndex == 0 ? Iconsax.home_25 : Iconsax.home_2,
                     text: home,
                   ),
                   GButton(
-                    icon: Iconsax.video_vertical,
+                    icon: _selectedIndex == 1 ? Iconsax.video_circle5 : Iconsax.video_circle,
                     text: tvSeries,
                   ),
                   GButton(
-                    icon: Iconsax.star,
+                    icon: _selectedIndex == 2 ? Iconsax.star5 : Iconsax.star_1,
                     text: trending),
                   GButton(
-                    icon: Iconsax.user_octagon,
+                    icon: _selectedIndex == 3 ? Iconsax.profile_2user5 : Iconsax.profile_2user,
                     text: actress,
                   )
                 ],

@@ -17,6 +17,11 @@ dependencies:
   google_fonts: ^6.1.0
   shimmer: ^3.0.0
   iconsax: ^0.0.8
+  http: ^1.1.2
+  flutter_svg: ^2.0.9
+  logger: ^2.0.2+1
+  cached_network_image: ^3.3.0
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
@@ -27,4 +32,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/splash.json
+    - assets/error.svg
 
