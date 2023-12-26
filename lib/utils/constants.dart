@@ -20,9 +20,12 @@ const String trending = 'Trending';
 const String actress = 'Actress';
 const String search = 'Search';
 const String searchMovieHint = 'Search movie';
+const String searchTvSeriesHint = 'Search TV Series';
 const String nowPlaying = 'Now Playing';
 const String popular = 'Popular';
 const String buttonOk = 'Ok';
+const String onTheAir = 'On The Air';
+const String topRated = 'Top Rated';
 const String httpError = 'Error retrieving data from API';
 
 /**
@@ -32,6 +35,8 @@ const String getNowPlayingList = '/movie/now_playing?';
 const String getPopularMovieList = '/movie/popular?';
 const String getMovieGenreList = '/genre/movie/list?';
 const String getTvGenreList = '/genre/tv/list?';
+const String getOnTheAirList = '/tv/on_the_air?';
+const String getTopRatedTvList = '/tv/top_rated?';
 
 /**
  * PARAMS
@@ -39,6 +44,7 @@ const String getTvGenreList = '/genre/tv/list?';
 const String language = 'language=';
 const String page = 'page=';
 const String region = 'region=';
+const String timezone = 'timezone=';
 
 /**
  * GENRES

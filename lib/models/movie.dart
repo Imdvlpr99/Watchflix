@@ -16,6 +16,7 @@ class Movie {
   late final int? voteCount;
   late final String? originalTitle;
   late final String? title;
+  late final String? firstAirDate;
 
   Movie(
       this.adult,
@@ -35,6 +36,7 @@ class Movie {
       this.voteCount,
       this.originalTitle,
       this.title,
+      this.firstAirDate,
       );
 
   factory Movie.fromJson(Map<String, dynamic> json) {
@@ -55,7 +57,8 @@ class Movie {
       json['vote_average'] ?? 0.0,
       json['vote_count'] ?? 0,
       json['original_title'] ?? '',
-      json['title'] ?? ''
+      json['title'] ?? '',
+      json['first_air_date'] ?? '',
     );
   }
 }

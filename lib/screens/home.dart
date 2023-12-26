@@ -115,7 +115,7 @@ class _HomeState extends State<Home> {
                       return const SizedBox(width: 15);
                     },
                     itemBuilder: (BuildContext context, int index) {
-                      return nowPlayingList!.isEmpty ? ShimmerHorizontal(index: index) :
+                      return nowPlayingList!.isEmpty ? const ShimmerHorizontal() :
                       MovieHorizontalItem(
                         movieItem: nowPlayingList![index],
                         genreList: movieGenreList,

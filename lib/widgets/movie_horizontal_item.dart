@@ -31,61 +31,70 @@ class MovieHorizontalItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String releaseDate = movieItem.releaseDate!.isEmpty ? movieItem.firstAirDate.toString() : movieItem.releaseDate.toString();
+
     return SizedBox(
       height: 350,
       width: 180,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SizedBox(
-            height: 250,
-            width: 180,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: CachedNetworkImage(
-                imageUrl: '$baseImageUrlW500${movieItem.posterPath}',
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: double.infinity,
-                placeholder: (context, url) => const ShimmerHorizontal(index: 0),
-                errorWidget: (context, url, error) => const ShimmerHorizontal(index: 0),
+      child: GestureDetector(
+        onTap: () {
+          if (onTap != null) {
+            onTap!();
+          }
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              height: 250,
+              width: 180,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: CachedNetworkImage(
+                  imageUrl: '$baseImageUrlW500${movieItem.posterPath}',
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                  placeholder: (context, url) => const ShimmerHorizontal(),
+                  errorWidget: (context, url, error) => const ShimmerHorizontal(),
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  movieItem.title.toString(),
-                  style: GoogleFonts.poppins().copyWith(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
+            const SizedBox(height: 10),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    movieItem.name!.isEmpty ? movieItem.title.toString() : movieItem.name.toString(),
+                    style: GoogleFonts.poppins().copyWith(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  '${Utils.formatDateString(movieItem.releaseDate.toString(), "yyyy-MM-dd", 'yyyy')} • ${mapGenreIdsToNames(movieItem.genreIds)}',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: GoogleFonts.poppins().copyWith(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500
+                  const SizedBox(height: 5),
+                  Text(
+                    '${Utils.formatDateString(releaseDate, "yyyy-MM-dd", 'yyyy')} • ${mapGenreIdsToNames(movieItem.genreIds)}',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: GoogleFonts.poppins().copyWith(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                StarRating(
-                  initialRating: movieItem.voteAverage!.toDouble(),
-                  maxRating: 10,)
-              ],
+                  const SizedBox(height: 5),
+                  StarRating(
+                    initialRating: movieItem.voteAverage!.toDouble(),
+                    maxRating: 10,)
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
