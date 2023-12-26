@@ -144,7 +144,7 @@ class _HomeState extends State<Home> {
             ),
             const SizedBox(height: 20),
             SizedBox(
-              height: topRatedList?.isEmpty ?? true ? 200 : 250,
+              height: topRatedList?.isEmpty ?? true ? 200 : 260,
               child: MediaQuery.removePadding(
                   context: context,
                   removeLeft: true,
@@ -164,7 +164,6 @@ class _HomeState extends State<Home> {
                     },
                   )),
             ),
-            const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Align(
