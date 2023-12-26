@@ -88,6 +88,20 @@ class MovieVerticalItem extends StatelessWidget {
                         const SizedBox(height: 10),
                         Row(
                           children: [
+                            StarRating(
+                              initialRating: movieItem.voteAverage!.toDouble(),
+                              maxRating: 10,
+                              color: mainColor,
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              '•',
+                              style: GoogleFonts.poppins().copyWith(
+                                color: Colors.white,
+                                fontSize: 16
+                              ),
+                            ),
+                            const SizedBox(width: 5),
                             Container(
                               height: 30,
                               decoration: BoxDecoration(
@@ -106,20 +120,6 @@ class MovieVerticalItem extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 5),
-                            Text(
-                              '•',
-                              style: GoogleFonts.poppins().copyWith(
-                                color: Colors.white,
-                                fontSize: 16
-                              ),
-                            ),
-                            const SizedBox(width: 5),
-                            StarRating(
-                              initialRating: movieItem.voteAverage!.toDouble(),
-                              maxRating: 10,
-                              color: mainColor,
-                            )
                           ],
                         ),
                         const SizedBox(height: 10),
