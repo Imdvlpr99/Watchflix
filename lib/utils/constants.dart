@@ -37,6 +37,7 @@ const String getMovieGenreList = '/genre/movie/list?';
 const String getTvGenreList = '/genre/tv/list?';
 const String getOnTheAirList = '/tv/on_the_air?';
 const String getTopRatedTvList = '/tv/top_rated?';
+const String getTopRatedMovieList = '/movie/top_rated?';
 
 /**
  * PARAMS

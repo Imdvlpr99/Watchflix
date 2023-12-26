@@ -13,6 +13,7 @@ import 'package:watchflix/widgets/shimmer_vertical.dart';
 import '../models/Movie.dart';
 import '../models/genre.dart';
 import '../widgets/movie_vertical_item.dart';
+import '../widgets/top_rated_item.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -25,6 +26,7 @@ class _HomeState extends State<Home> {
   final _searchController = TextEditingController();
   List<Movie>? nowPlayingList = [];
   List<Movie>? popularList = [];
+  List<Movie>? topRatedList = [];
   List<Genre> movieGenreList = [];
 
   @override
@@ -40,12 +42,14 @@ class _HomeState extends State<Home> {
       movieGenreList.clear();
 
       List<Movie> getNowPlaying = await ApiServices.getNowPlayingMovie('en-US', 'id', 1);
+      List<Movie> getTopRatedMovie = await ApiServices.getTopRatedMovie('en-US', 'ID', 1);
       List<Movie> getPopular = await ApiServices.getPopularMovie('en-US', 'id', 1);
       List<Genre> getMovieGenreList = await ApiServices.getMovieGenre('en');
 
       setState(() {
         nowPlayingList = getNowPlaying;
         movieGenreList = getMovieGenreList;
+        topRatedList = getTopRatedMovie;
         popularList = getPopular;
       });
     } catch (e) {
@@ -119,6 +123,43 @@ class _HomeState extends State<Home> {
                       MovieHorizontalItem(
                         movieItem: nowPlayingList![index],
                         genreList: movieGenreList,
+                      );
+                    },
+                  )),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  topRated,
+                  style: GoogleFonts.poppins().copyWith(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              height: topRatedList?.isEmpty ?? true ? 200 : 250,
+              child: MediaQuery.removePadding(
+                  context: context,
+                  removeLeft: true,
+                  removeRight: true,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    itemCount: topRatedList?.isEmpty ?? true ? 3 : topRatedList!.length,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(width: 15);
+                    },
+                    itemBuilder: (BuildContext context, int index) {
+                      return topRatedList!.isEmpty ? const ShimmerHorizontal() :
+                      TopRatedItem(
+                        movieItem: topRatedList![index],
                       );
                     },
                   )),
