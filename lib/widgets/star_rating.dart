@@ -5,10 +5,12 @@ import 'package:watchflix/utils/constants.dart';
 class StarRating extends StatelessWidget {
   final double initialRating;
   final double maxRating;
+  final Color? color;
   const StarRating({
     super.key,
     required this.initialRating,
-    required this.maxRating});
+    required this.maxRating,
+    this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class StarRating extends StatelessWidget {
           height: 30,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: secondaryColor
+            color: color ?? secondaryColor
           ),
           child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 10, top: 7, bottom: 2),
