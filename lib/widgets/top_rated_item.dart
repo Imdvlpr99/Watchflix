@@ -17,7 +17,7 @@ class TopRatedItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 280,
+      height: 240,
       width: 150,
       child: GestureDetector(
         onTap: () {
@@ -86,7 +86,7 @@ class TopRatedItem extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Text(
-                movieItem.name.toString(),
+                movieItem.name!.isEmpty ? movieItem.title.toString() : movieItem.name.toString(),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.poppins().copyWith(
