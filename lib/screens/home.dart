@@ -1,19 +1,21 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:watchflix/api/api_services.dart';
 import 'package:watchflix/utils/constants.dart';
 import 'package:watchflix/utils/custom_dialog.dart';
+import 'package:watchflix/widgets/carousel_item.dart';
+import 'package:watchflix/widgets/movie_desc.dart';
+import 'package:watchflix/widgets/section_header.dart';
 import 'package:watchflix/utils/utils.dart';
 import 'package:watchflix/widgets/custom_text_field.dart';
-import 'package:watchflix/widgets/movie_horizontal_item.dart';
 import 'package:watchflix/widgets/shimmer_horizontal.dart';
 import 'package:watchflix/widgets/shimmer_vertical.dart';
 
 import '../models/Movie.dart';
 import '../models/genre.dart';
 import '../widgets/movie_vertical_item.dart';
-import '../widgets/top_rated_item.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -26,8 +28,10 @@ class _HomeState extends State<Home> {
   final _searchController = TextEditingController();
   List<Movie>? nowPlayingList = [];
   List<Movie>? popularList = [];
-  List<Movie>? topRatedList = [];
   List<Genre> movieGenreList = [];
+
+  late int _currentPage  = 0;
+  Movie? selectedMovie;
 
   @override
   void initState() {
@@ -42,15 +46,14 @@ class _HomeState extends State<Home> {
       movieGenreList.clear();
 
       List<Movie> getNowPlaying = await ApiServices.getNowPlayingMovie('en-US', 'id', 1);
-      List<Movie> getTopRatedMovie = await ApiServices.getTopRatedMovie('en-US', 'ID', 1);
       List<Movie> getPopular = await ApiServices.getPopularMovie('en-US', 'id', 1);
       List<Genre> getMovieGenreList = await ApiServices.getMovieGenre('en');
 
       setState(() {
         nowPlayingList = getNowPlaying;
         movieGenreList = getMovieGenreList;
-        topRatedList = getTopRatedMovie;
         popularList = getPopular;
+        selectedMovie = nowPlayingList![0];
       });
     } catch (e) {
       _showErrorDialog(e.toString());
@@ -90,80 +93,51 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  nowPlaying,
-                  style: GoogleFonts.poppins().copyWith(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600
-                  ),
-                ),
-              ),
-            ),
+            const SectionHeader(
+                headerTitle: nowPlaying,
+                seeAllTitle: 'See All'),
             const SizedBox(height: 20),
             SizedBox(
-              height: nowPlayingList?.isEmpty ?? true ? 250 : 350,
-              child: MediaQuery.removePadding(
-                  context: context,
-                  removeLeft: true,
-                  removeRight: true,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  CarouselSlider.builder(
                     itemCount: nowPlayingList?.isEmpty ?? true ? 3 : nowPlayingList!.length,
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(width: 15);
-                    },
-                    itemBuilder: (BuildContext context, int index) {
-                      return nowPlayingList!.isEmpty ? const ShimmerHorizontal() :
-                      MovieHorizontalItem(
-                        movieItem: nowPlayingList![index],
-                        genreList: movieGenreList,
+                    options: CarouselOptions(
+                      height: 290,
+                      viewportFraction: 0.45,
+                      enableInfiniteScroll: true,
+                      scrollDirection: Axis.horizontal,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          _currentPage = index;
+                          selectedMovie = nowPlayingList![index];
+                        });
+                      },
+                    ),
+                    itemBuilder: (context, index, pageViewIndex) {
+                      final bool isSelected = _currentPage == index;
+                      final double scaleFactor = isSelected ? 1.0 : 0.9;
+
+                      return Transform.scale(
+                        scale: scaleFactor,
+                        child: nowPlayingList!.isEmpty
+                            ? const ShimmerHorizontal()
+                            : CarouselItem(
+                          movieItem: nowPlayingList![index],
+                          isSelected: isSelected,
+                        ),
                       );
                     },
-                  )),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  topRated,
-                  style: GoogleFonts.poppins().copyWith(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600
                   ),
-                ),
+                  const SizedBox(height: 10),
+                  if (selectedMovie != null)
+                    MovieDesc(
+                      movieItem: selectedMovie!,
+                      genreLists: movieGenreList,),
+                ],
               ),
             ),
-            const SizedBox(height: 20),
-            SizedBox(
-              height: topRatedList?.isEmpty ?? true ? 200 : 260,
-              child: MediaQuery.removePadding(
-                  context: context,
-                  removeLeft: true,
-                  removeRight: true,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    itemCount: topRatedList?.isEmpty ?? true ? 3 : topRatedList!.length,
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(width: 15);
-                    },
-                    itemBuilder: (BuildContext context, int index) {
-                      return topRatedList!.isEmpty ? const ShimmerHorizontal() :
-                      TopRatedItem(
-                        movieItem: topRatedList![index],
-                      );
-                    },
-                  )),
-            ),
+            const SizedBox(height: 10),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Align(
