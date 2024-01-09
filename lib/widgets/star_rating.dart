@@ -6,41 +6,90 @@ class StarRating extends StatelessWidget {
   final double initialRating;
   final double maxRating;
   final Color? color;
+  final Color? starColor;
+  final Color? textColor;
+  final bool isStarInside;
+  final double? starSize;
+  final double? borderRadius;
+  final double? paddingVertical;
+  final double? paddingHorizontal;
+  final double? textSize;
+
   const StarRating({
     super.key,
     required this.initialRating,
     required this.maxRating,
-    this.color});
+    this.color,
+    this.isStarInside = false,
+    this.starSize,
+    this.borderRadius,
+    this.paddingVertical,
+    this.paddingHorizontal,
+    this.starColor,
+    this.textColor,
+    this.textSize});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return isStarInside == false ? Row(
       children: <Widget> [
-        const Icon(
+        Icon(
           Icons.star,
-          size: 20,
-          color: Colors.yellow,),
+          size: starSize ?? 20,
+          color: starColor ?? Colors.yellow),
         const SizedBox(width: 5),
         Container(
-          height: 30,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: color ?? secondaryColor
+              borderRadius: BorderRadius.circular(borderRadius ?? 20),
+              color: color ?? secondaryColor
           ),
           child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, top: 7, bottom: 2),
+            padding: EdgeInsets.symmetric(
+                vertical: paddingVertical ?? 5,
+                horizontal: paddingHorizontal ?? 10),
             child: Text(
               '${double.parse(initialRating.toStringAsFixed(1))} / ${maxRating.toInt()}',
               style: GoogleFonts.poppins().copyWith(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.w600
+                  color: textColor ?? Colors.white,
+                  fontSize: textSize ?? 12,
+                  fontWeight: FontWeight.w600
               ),
             ),
           ),
         )
       ],
-    );
+    ) :
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(borderRadius ?? 20),
+            color: color ?? secondaryColor
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: paddingVertical ?? 5,
+                horizontal: paddingHorizontal ?? 10
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                    Icons.star,
+                    size: starSize ?? 20,
+                    color: starColor ?? Colors.yellow),
+                const SizedBox(width: 5),
+                Text(
+                  '${double.parse(initialRating.toStringAsFixed(1))} / ${maxRating.toInt()}',
+                  style: GoogleFonts.poppins().copyWith(
+                      color: textColor ?? Colors.white,
+                      fontSize: textSize ?? 12,
+                      fontWeight: FontWeight.w600
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+    ;
   }
 
 }
