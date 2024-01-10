@@ -3,9 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:watchflix/utils/constants.dart';
 
-/**
- * Created by Imdvlpr_
- */
+/// Created by Imdvlpr_
 
 class CustomTextField<T> extends StatelessWidget {
   final TextEditingController controller;
@@ -86,8 +84,8 @@ class CustomTextField<T> extends StatelessWidget {
             fontSize: 14,
           ),
           prefixIcon: prefixIcon,
-          suffixIcon: dropdownItems != null
-              ? Padding(
+          suffixIcon: dropdownItems != null ?
+          Padding(
             padding: const EdgeInsets.only(right: 10.0),
             child: DropdownButton<T>(
               value: selectedDropdownItem,

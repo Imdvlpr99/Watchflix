@@ -11,7 +11,7 @@ class Trending extends StatefulWidget {
 class _TrendingState extends State<Trending> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 
 }

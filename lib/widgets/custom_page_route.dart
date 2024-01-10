@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-/**
- * Created by Imdvlpr_
- */
+/// Created by Imdvlpr_
 
 class CustomPageRoute extends PageRouteBuilder {
   final Widget child;
