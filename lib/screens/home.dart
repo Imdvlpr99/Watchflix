@@ -1,15 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:watchflix/api/api_services.dart';
 import 'package:watchflix/utils/constants.dart';
 import 'package:watchflix/utils/custom_dialog.dart';
 import 'package:watchflix/widgets/carousel_item.dart';
 import 'package:watchflix/widgets/movie_desc.dart';
+import 'package:watchflix/widgets/search_bar.dart';
 import 'package:watchflix/widgets/section_header.dart';
 import 'package:watchflix/utils/utils.dart';
-import 'package:watchflix/widgets/custom_text_field.dart';
 import 'package:watchflix/widgets/shimmer_horizontal.dart';
 import 'package:watchflix/widgets/shimmer_vertical.dart';
 
@@ -75,24 +74,16 @@ class _HomeState extends State<Home> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget> [
+            const SizedBox(height: 10),
             Container(
               margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: SizedBox(
-                height: 100,
-                child: Center(
-                  child: CustomTextField<String>(
-                    controller: _searchController,
-                    labelText: '',
-                    hintText: searchMovieHint,
-                    suffixIcon: const Icon(
-                      Iconsax.search_normal,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
+              child: CustomSearchBar(
+                enableFilter: true,
+                searchController: _searchController,
+                searchHint: searchHint,
+              )
             ),
+            const SizedBox(height: 10),
             const SectionHeader(
                 headerTitle: nowPlaying,
                 seeAllTitle: 'See All'),
