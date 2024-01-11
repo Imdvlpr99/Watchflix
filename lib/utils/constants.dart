@@ -29,6 +29,7 @@ const String searchHint = 'Search Movie, TV Series or Actress';
 const String notLoggedIn = 'You\'re not logged in';
 const String haveAccount = 'Do you have account?';
 const String login = 'Login';
+const String seeAll = 'See All';
 const String httpError = 'Error retrieving data from API';
 
 /// ENDPOINTS
