@@ -47,7 +47,7 @@ class _BaseState extends State<Base> {
                 activeColor: red,
                 tabBackgroundColor: mainColor,
                 gap: 8,
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(12),
                 tabs: [
                   GButton(
                     icon: _selectedIndex == 0 ? Iconsax.home_25 : Iconsax.home_2,
