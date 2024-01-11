@@ -53,7 +53,7 @@ class ErrorDialog extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: SvgPicture.asset(
-                'assets/error.svg',
+                'assets/images/error.svg',
                 width: 200,
                 height: 200,
               ),

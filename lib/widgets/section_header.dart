@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:watchflix/utils/constants.dart';
 
 class SectionHeader extends StatelessWidget {
-  final String headerTitle;
-  final String seeAllTitle;
-  final Function? onPressed;
+  final String leftTitle;
+  final String rightTitle;
+  final double? leftTitleFontSize;
+  final double? rightTitleFontSize;
+  final bool? setLeftTitle;
+  final VoidCallback? onPressed;
 
   const SectionHeader({
     super.key,
-    required this.headerTitle,
-    required this.seeAllTitle,
-    this.onPressed});
+    required this.leftTitle,
+    required this.rightTitle,
+    this.onPressed,
+    this.leftTitleFontSize,
+    this.rightTitleFontSize,
+    this.setLeftTitle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +29,14 @@ class SectionHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              headerTitle,
+              leftTitle,
               style: GoogleFonts.poppins().copyWith(
                 color: Colors.white,
-                fontSize: 22,
+                fontSize: leftTitleFontSize ?? 22,
                 fontWeight: FontWeight.w600,
               ),
             ),
             const Spacer(),
-
             GestureDetector(
               onTap: () {
                 if (onPressed != null) {
@@ -41,18 +46,12 @@ class SectionHeader extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    seeAllTitle,
+                    rightTitle,
                     style: GoogleFonts.poppins().copyWith(
                       color: red,
-                      fontSize: 18,
+                      fontSize: rightTitleFontSize ?? 18,
                       fontWeight: FontWeight.w600,
                     ),
-                  ),
-                  const SizedBox(width: 5),
-                  const Icon(
-                    Iconsax.arrow_right_3,
-                    size: 20,
-                    color: red,
                   ),
                 ],
               ),

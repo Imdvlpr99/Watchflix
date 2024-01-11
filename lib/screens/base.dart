@@ -43,8 +43,8 @@ class _BaseState extends State<Base> {
               padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0),
               child: GNav(
                 backgroundColor: secondaryColor,
-                color: Colors.white,
-                activeColor: Colors.white,
+                color: white,
+                activeColor: red,
                 tabBackgroundColor: mainColor,
                 gap: 8,
                 padding: const EdgeInsets.all(16),

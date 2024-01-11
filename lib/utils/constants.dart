@@ -5,6 +5,7 @@ const Color secondaryColor = Color(0xFF474E68);
 const Color accentColor = Color(0xFF79587B);
 const Color red = Color(0xFFEB4C42);
 const Color white = Color(0xFFF7F8FF);
+const Color gold = Color(0xFFD4A418);
 
 /// BASE URL
 const String baseUrl = 'https://api.themoviedb.org/3';
@@ -25,6 +26,10 @@ const String buttonOk = 'Ok';
 const String onTheAir = 'On The Air';
 const String topRated = 'Top Rated';
 const String searchHint = 'Search Movie, TV Series or Actress';
+const String notLoggedIn = 'You\'re not logged in';
+const String haveAccount = 'Do you have account?';
+const String login = 'Login';
+const String seeAll = 'See All';
 const String httpError = 'Error retrieving data from API';
 
 /// ENDPOINTS
