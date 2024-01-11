@@ -6,7 +6,7 @@ import 'package:watchflix/utils/constants.dart';
 class SectionHeader extends StatelessWidget {
   final String headerTitle;
   final String seeAllTitle;
-  final Function? onPressed;
+  final VoidCallback? onPressed;
 
   const SectionHeader({
     super.key,
@@ -47,12 +47,6 @@ class SectionHeader extends StatelessWidget {
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                     ),
-                  ),
-                  const SizedBox(width: 5),
-                  const Icon(
-                    Iconsax.arrow_right_3,
-                    size: 20,
-                    color: red,
                   ),
                 ],
               ),
