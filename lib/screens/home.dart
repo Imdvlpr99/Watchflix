@@ -1,9 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:watchflix/api/api_services.dart';
+import 'package:watchflix/screens/details_movie_tv.dart';
 import 'package:watchflix/utils/constants.dart';
 import 'package:watchflix/utils/custom_dialog.dart';
 import 'package:watchflix/widgets/carousel_item.dart';
+import 'package:watchflix/widgets/custom_page_route.dart';
 import 'package:watchflix/widgets/home_header.dart';
 import 'package:watchflix/widgets/movie_desc.dart';
 import 'package:watchflix/widgets/section_header.dart';
@@ -147,6 +149,14 @@ class _HomeState extends State<Home> {
                                         : CarouselItem(
                                       movieItem: nowPlayingList![index],
                                       isSelected: isSelected,
+                                      onItemTap: () {
+                                        Navigator.of(context, rootNavigator: true).push(
+                                          CustomPageRoute(
+                                            child: DetailsMovieTv(isMovie: true,),
+                                            direction: AxisDirection.left, // Specify the desired transition direction
+                                          ),
+                                        );
+                                      },
                                     ),
                                   );
                                 },
