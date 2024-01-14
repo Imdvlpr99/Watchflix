@@ -150,9 +150,12 @@ class _HomeState extends State<Home> {
                                       movieItem: nowPlayingList![index],
                                       isSelected: isSelected,
                                       onItemTap: () {
+                                        Utils.getLogger().d(nowPlayingList![index].id!);
                                         Navigator.of(context, rootNavigator: true).push(
                                           CustomPageRoute(
-                                            child: DetailsMovieTv(isMovie: true,),
+                                            child: DetailsMovieTv(
+                                              isMovie: true,
+                                              movieId: nowPlayingList![index].id!,),
                                             direction: AxisDirection.left, // Specify the desired transition direction
                                           ),
                                         );
