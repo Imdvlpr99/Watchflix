@@ -9,38 +9,48 @@ import '../utils/constants.dart';
 class CarouselItem extends StatelessWidget {
   final Movie movieItem;
   final bool isSelected;
+  final Function? onItemTap;
 
   const CarouselItem({
     super.key,
     required this.movieItem,
-    required this.isSelected,});
+    required this.isSelected,
+    this.onItemTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15)
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(
-            width: 180,
-            height: 280,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: CachedNetworkImage(
-                imageUrl: '$baseImageUrlW500${movieItem.posterPath}',
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: double.infinity,
-                placeholder: (context, url) => const ShimmerHorizontal(),
-                errorWidget: (context, url, error) => const ShimmerHorizontal(),
-              ),
-            ),
+    return GestureDetector(
+      onTap: () {
+        if (onItemTap != null) {
+          onItemTap!();
+        }
+      },
+      child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15)
           ),
-        ],
-      )
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                width: 180,
+                height: 280,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: CachedNetworkImage(
+                    imageUrl: '$baseImageUrlW500${movieItem.posterPath}',
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                    placeholder: (context, url) => const ShimmerHorizontal(),
+                    errorWidget: (context, url, error) => const ShimmerHorizontal(),
+                  ),
+                ),
+              ),
+            ],
+          )
+      ),
     );
   }
 
