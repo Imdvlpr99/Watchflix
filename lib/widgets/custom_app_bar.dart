@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:watchflix/utils/constants.dart';
 
 class CustomAppBar extends StatelessWidget {
   final bool backButtonEnabled;
@@ -57,10 +58,10 @@ class CustomAppBar extends StatelessWidget {
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade800,
+                          color: Colors.grey.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(15),
                           border: Border.all(
-                            color: Colors.grey,
+                            color: white,
                             width: 1,
                           ),
                         ),
@@ -68,7 +69,7 @@ class CustomAppBar extends StatelessWidget {
                           child: Icon(
                             Iconsax.arrow_left,
                             size: 20,
-                            color: Colors.white,
+                            color: white,
                           ),
                         ),
                       ),
@@ -84,10 +85,10 @@ class CustomAppBar extends StatelessWidget {
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade800,
+                          color: Colors.grey.withOpacity(0.5),
                           borderRadius: BorderRadius.circular(15),
                           border: Border.all(
-                            color: Colors.grey,
+                            color: white,
                             width: 1,
                           ),
                         ),
@@ -95,7 +96,7 @@ class CustomAppBar extends StatelessWidget {
                           child: Icon(
                             infoIcon ?? Iconsax.arrow_left,
                             size: 20,
-                            color: Colors.white,
+                            color: white,
                           ),
                         ),
                       ),
