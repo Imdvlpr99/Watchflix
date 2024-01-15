@@ -10,6 +10,7 @@ const Color gold = Color(0xFFD4A418);
 /// BASE URL
 const String baseUrl = 'https://api.themoviedb.org/3';
 const String baseImageUrlW500 = 'https://image.tmdb.org/t/p/w500';
+const String baseImageUrlOriginal = 'https://image.tmdb.org/t/p/original';
 const String accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlM2YwOGFmOGMzMGU4OGVlNjcwOTE4NzZiZTYwMGRjZiIsInN1YiI6IjY1N2U4ODRlZWE4NGM3MTYzZWI3ZjBhOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.IeLlIspFS7Vfjqb70sabIZVZjLmPXfPf8T0eWdUd0vY';
 
 /// TRANSLATION
