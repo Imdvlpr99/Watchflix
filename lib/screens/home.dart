@@ -26,6 +26,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final _searchController = TextEditingController();
+  late final ApiServices _api;
   List<Movie>? nowPlayingList = [];
   List<Movie>? popularList = [];
   List<Genre> movieGenreList = [];
@@ -37,7 +38,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    fetchData(context);
+    fetchData();
     isSearchEmpty = true;
     _searchController.addListener(() {
       setState(() {
@@ -52,15 +53,15 @@ class _HomeState extends State<Home> {
     });
   }
 
-  void fetchData(BuildContext context) async {
+  void fetchData() async {
     try {
       nowPlayingList?.clear();
       popularList?.clear();
       movieGenreList.clear();
-
-      List<Movie> getNowPlaying = await ApiServices.getNowPlayingMovie('en-US', 'id', 1);
-      List<Movie> getPopular = await ApiServices.getPopularMovie('en-US', 'id', 1);
-      List<Genre> getMovieGenreList = await ApiServices.getMovieGenre('en');
+      _api = ApiServices();
+      List<Movie> getNowPlaying = await _api.getNowPlayingMovie('en-US', 'id', 1);
+      List<Movie> getPopular = await _api.getPopularMovie('en-US', 'id', 1);
+      List<Genre> getMovieGenreList = await _api.getMovieGenre('en');
 
       setState(() {
         nowPlayingList = getNowPlaying;
@@ -155,7 +156,9 @@ class _HomeState extends State<Home> {
                                           CustomPageRoute(
                                             child: DetailsMovieTv(
                                               isMovie: true,
-                                              movieId: nowPlayingList![index].id!,),
+                                              movieId: nowPlayingList![index].id!,
+                                              moviePoster: nowPlayingList![index].posterPath,
+                                            ),
                                             direction: AxisDirection.left, // Specify the desired transition direction
                                           ),
                                         );
