@@ -41,12 +41,14 @@ const String getTvGenreList = '/genre/tv/list?';
 const String getOnTheAirList = '/tv/on_the_air?';
 const String getTopRatedTvList = '/tv/top_rated?';
 const String getTopRatedMovieList = '/movie/top_rated?';
+const String movieDetail = '/movie/';
 
 /// PARAMS
 const String language = 'language=';
 const String page = 'page=';
 const String region = 'region=';
 const String timezone = 'timezone=';
+const String appendToResponse = '&append_to_response=videos,images,similar';
 
 /**
  * GENRES
