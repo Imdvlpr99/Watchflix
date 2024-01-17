@@ -18,8 +18,8 @@ class MovieDesc extends StatelessWidget {
     required this.genreLists
   });
 
-  List<String> mapGenreIdsToNames(List<int>? genreIds) {
-    List<String> genreNames = genreIds!.map((id) {
+  List<String?> mapGenreIdsToNames(List<int>? genreIds) {
+    List<String?> genreNames = genreIds!.map((id) {
       return genreLists.firstWhere((genre) => genre.id == id).name;
     }).toList();
 
@@ -28,7 +28,7 @@ class MovieDesc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> genreNames = mapGenreIdsToNames(movieItem.genreIds);
+    List<String?> genreNames = mapGenreIdsToNames(movieItem.genreIds);
 
     return SizedBox(
       child: Center(

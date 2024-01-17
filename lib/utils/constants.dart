@@ -48,7 +48,7 @@ const String language = 'language=';
 const String page = 'page=';
 const String region = 'region=';
 const String timezone = 'timezone=';
-const String appendToResponse = '&append_to_response=videos,images,similar';
+const String appendToResponse = '&append_to_response=videos,images,similar,credits';
 
 /**
  * GENRES

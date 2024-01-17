@@ -22,7 +22,7 @@ class MovieHorizontalItem extends StatelessWidget {
   }) : super(key: key);
 
   String mapGenreIdsToNames(List<int>? genreIds) {
-    List<String> genreNames = genreIds!.map((id) {
+    List<String?> genreNames = genreIds!.map((id) {
       return genreList.firstWhere((genre) => genre.id == id).name;
     }).toList();
 

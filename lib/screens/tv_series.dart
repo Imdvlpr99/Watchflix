@@ -21,6 +21,7 @@ class TvSeries extends StatefulWidget {
 }
 
 class _TvSeriesState extends State<TvSeries> {
+  late final ApiServices _api;
   final _searchController = TextEditingController();
   List<Movie>? onTheAirList = [];
   List<Movie>? topRatedList = [];
@@ -37,10 +38,10 @@ class _TvSeriesState extends State<TvSeries> {
       onTheAirList?.clear();
       topRatedList?.clear();
       tvGenreList.clear();
-
-      List<Movie> getOnTheAir = await ApiServices.getOnTheAir('en-US', 'id', 1);
-      List<Movie> getTopRated = await ApiServices.getTopRatedTv('en-US', 1);
-      List<Genre> tvGenre = await ApiServices.getTvGenre('en');
+      _api = ApiServices();
+      List<Movie> getOnTheAir = await _api.getOnTheAir('en-US', 'id', 1);
+      List<Movie> getTopRated = await _api.getTopRatedTv('en-US', 1);
+      List<Genre> tvGenre = await _api.getTvGenre('en');
 
       setState(() {
         onTheAirList = getOnTheAir;
@@ -58,6 +59,11 @@ class _TvSeriesState extends State<TvSeries> {
       context: context,
       title: error,
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

@@ -20,8 +20,8 @@ class MovieVerticalItem extends StatelessWidget {
     required this.genreList,
     this.onTap});
 
-  List<String> mapGenreIdsToNames(List<int>? genreIds) {
-    List<String> genreNames = genreIds!.map((id) {
+  List<String?> mapGenreIdsToNames(List<int>? genreIds) {
+    List<String?> genreNames = genreIds!.map((id) {
       return genreList.firstWhere((genre) => genre.id == id).name;
     }).toList();
 
@@ -30,7 +30,7 @@ class MovieVerticalItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> genreNames = mapGenreIdsToNames(movieItem.genreIds);
+    List<String?> genreNames = mapGenreIdsToNames(movieItem.genreIds);
 
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
@@ -138,7 +138,7 @@ class MovieVerticalItem extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 10, right: 10, top: 7, bottom: 2),
                                   child: Text(
-                                    item,
+                                    item!,
                                     style: GoogleFonts.poppins().copyWith(
                                       color: Colors.white,
                                       fontSize: 12,
