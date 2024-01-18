@@ -58,7 +58,7 @@ class CustomAppBar extends StatelessWidget {
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.5),
+                          color: red,
                           borderRadius: BorderRadius.circular(15),
                           border: Border.all(
                             color: white,
@@ -85,7 +85,7 @@ class CustomAppBar extends StatelessWidget {
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.5),
+                          color: red,
                           borderRadius: BorderRadius.circular(15),
                           border: Border.all(
                             color: white,
