@@ -94,11 +94,8 @@ class _HomeState extends State<Home> {
       backgroundColor: mainColor,
       body: Column(
         children: [
-          Container(
-            margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: HomeHeader(
-              searchController: _searchController,
-            ),
+          HomeHeader(
+            searchController: _searchController,
           ),
           isSearchEmpty == true ?
           Expanded(
