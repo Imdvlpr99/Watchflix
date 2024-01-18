@@ -32,6 +32,7 @@ const String haveAccount = 'Do you have account?';
 const String login = 'Login';
 const String seeAll = 'See All';
 const String httpError = 'Error retrieving data from API';
+const String released = 'Released';
 
 /// ENDPOINTS
 const String getNowPlayingList = '/movie/now_playing?';
@@ -48,7 +49,7 @@ const String language = 'language=';
 const String page = 'page=';
 const String region = 'region=';
 const String timezone = 'timezone=';
-const String appendToResponse = '&append_to_response=videos,images,similar,credits';
+const String appendToResponse = '&append_to_response=videos,images,similar,credits,external_ids';
 
 /**
  * GENRES
