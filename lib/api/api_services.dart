@@ -212,7 +212,6 @@ class ApiServices {
 
       final Map<String, dynamic> data = json.decode(response.body);
       final Movie movie = Movie.fromJson(data);
-      Utils.getLogger().d('$baseUrl$movieDetail$movieId$language$lang$appendToResponse');
       Utils.getLogger().d(data);
       if (response.statusCode == 200) {
         return movie;
