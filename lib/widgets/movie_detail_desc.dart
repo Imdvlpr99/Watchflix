@@ -11,6 +11,7 @@ class MovieDetailDesc extends StatelessWidget {
   final String? releaseDate;
   final String? movieName;
   final String? releaseStatus;
+  final String? originalTitle;
   final bool? isReleased;
   final List<Genre>? movieGenre;
 
@@ -20,7 +21,8 @@ class MovieDetailDesc extends StatelessWidget {
     this.movieName,
     this.isReleased,
     this.movieGenre,
-    this.releaseStatus
+    this.releaseStatus,
+    this.originalTitle
   });
 
   @override
@@ -56,7 +58,7 @@ class MovieDetailDesc extends StatelessWidget {
                 )
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             Text(
               movieName!,
               textAlign: TextAlign.center,
@@ -66,7 +68,17 @@ class MovieDetailDesc extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(height: 10),
+            movieName! != originalTitle! ?
+            Text(
+              originalTitle!,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins().copyWith(
+                color: white,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ) : const SizedBox(),
+            const SizedBox(height: 15),
             Center(
               child: LayoutBuilder(
                 builder: (context, constraint) {
@@ -83,6 +95,7 @@ class MovieDetailDesc extends StatelessWidget {
                   return Wrap(
                     spacing: 5.0,
                     runSpacing: 5.0,
+                    alignment: WrapAlignment.center,
                     children: genreWidgets,
                   );
                 },
