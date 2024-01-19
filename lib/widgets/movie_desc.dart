@@ -80,7 +80,7 @@ class MovieDesc extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 50),
               child: Center(
                 child: LayoutBuilder(
                   builder: (context, constraint) {
@@ -96,6 +96,7 @@ class MovieDesc extends StatelessWidget {
                     return Wrap(
                       spacing: 5.0,
                       runSpacing: 5.0,
+                      alignment: WrapAlignment.center,
                       children: genreWidgets,
                     );
                   },

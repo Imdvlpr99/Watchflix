@@ -8,6 +8,7 @@ class SectionHeader extends StatelessWidget {
   final double? leftTitleFontSize;
   final double? rightTitleFontSize;
   final bool? setLeftTitle;
+  final bool? disablePadding;
   final VoidCallback? onPressed;
 
   const SectionHeader({
@@ -18,12 +19,13 @@ class SectionHeader extends StatelessWidget {
     this.leftTitleFontSize,
     this.rightTitleFontSize,
     this.setLeftTitle,
+    this.disablePadding = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+    return Container(
+      padding: disablePadding != true ? const EdgeInsets.symmetric(horizontal: 20) : null,
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
