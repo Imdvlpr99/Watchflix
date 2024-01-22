@@ -12,7 +12,7 @@ import '../models/genre.dart';
 class MovieVerticalItem extends StatelessWidget {
   final Movie movieItem;
   final List<Genre> genreList;
-  final Function? onTap;
+  final VoidCallback? onTap;
 
   const MovieVerticalItem({
     super.key,
@@ -111,7 +111,9 @@ class MovieVerticalItem extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 10, right: 10, top: 7, bottom: 2),
                                 child: Text(
-                                  Utils.formatDateString(movieItem.releaseDate.toString(), 'yyyy-MM-dd', 'yyyy'),
+                                  movieItem.releaseDate!.isNotEmpty ?
+                                  Utils.formatDateString(movieItem.releaseDate.toString(), 'yyyy-MM-dd', 'yyyy') :
+                                  '',
                                   style: GoogleFonts.poppins().copyWith(
                                       color: Colors.white,
                                       fontSize: 12,
@@ -152,6 +154,7 @@ class MovieVerticalItem extends StatelessWidget {
                             int maxVisibleItems = (constraints.maxWidth / containerWidth).floor();
 
                             if (genreWidgets.isNotEmpty && genreWidgets.length > maxVisibleItems) {
+                              genreWidgets = genreWidgets.sublist(0, maxVisibleItems); // Show only maxVisibleItems
                               genreWidgets.add(
                                 Container(
                                   height: 30,

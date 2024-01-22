@@ -2,7 +2,7 @@ import 'package:watchflix/models/external_id.dart';
 import 'package:watchflix/models/spoken_languages.dart';
 import 'package:watchflix/models/videos.dart';
 
-import 'cast.dart';
+import 'people.dart';
 import 'genre.dart';
 
 class Movie {
@@ -31,7 +31,7 @@ class Movie {
   late final List<Genre>? genres;
   late final List<Videos>? videos;
   late final List<Movie>? similar;
-  late final List<Cast>? cast;
+  late final List<People>? cast;
   late final ExternalIDs? externalIds;
 
   Movie({
@@ -104,9 +104,9 @@ class Movie {
           (json['similar']['results'] as List<dynamic>?)
               ?.map((similarMovies) => Movie.fromJson(similarMovies)).toList() ?? []
       ) : [],
-      cast: json.containsKey('credits') == true ? List<Cast>.from(
+      cast: json.containsKey('credits') == true ? List<People>.from(
           (json['credits']['cast'] as List<dynamic>?)
-              ?.map((castList) => Cast.fromJson(castList)).toList() ?? []
+              ?.map((castList) => People.fromJson(castList)).toList() ?? []
       ) : [],
       externalIds: json.containsKey('external_ids') ? ExternalIDs.fromJson(json['external_ids']) : null,
     );

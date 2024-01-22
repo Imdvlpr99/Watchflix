@@ -1,4 +1,4 @@
-class Cast {
+class People {
 
   late final bool adult;
   late final int gender;
@@ -9,7 +9,7 @@ class Cast {
   late final String profilePath;
   late final String character;
 
-  Cast(
+  People(
       this.adult,
       this.gender,
       this.id,
@@ -20,8 +20,8 @@ class Cast {
       this.character
       );
 
-  factory Cast.fromJson(Map<String, dynamic> json) {
-    return Cast(
+  factory People.fromJson(Map<String, dynamic> json) {
+    return People(
       json['adult'] ?? false,
       json['gender'] ?? 0,
       json['id'] ?? 0,

@@ -142,9 +142,9 @@ class _HomeState extends State<Home> {
 
                                   return Transform.scale(
                                     scale: scaleFactor,
-                                    child: nowPlayingList!.isEmpty
-                                        ? const ShimmerHorizontal()
-                                        : CarouselItem(
+                                    child: nowPlayingList!.isEmpty ?
+                                    const ShimmerHorizontal() :
+                                    CarouselItem(
                                       movieItem: nowPlayingList![index],
                                       isSelected: isSelected,
                                       onItemTap: () {
@@ -193,9 +193,9 @@ class _HomeState extends State<Home> {
                               return const SizedBox(height: 15);
                             },
                             itemBuilder: (BuildContext context, int index) {
-                              return popularList!.isEmpty
-                                  ? const ShimmerVertical()
-                                  : MovieVerticalItem(
+                              return popularList!.isEmpty ?
+                              const ShimmerVertical() :
+                              MovieVerticalItem(
                                 movieItem: popularList![index],
                                 genreList: movieGenreList,
                               );

@@ -31,7 +31,8 @@ class StarRating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isStarInside == false ? Row(
+    return isStarInside == false ?
+    Row(
       children: <Widget> [
         Icon(
           Icons.star,
@@ -59,37 +60,37 @@ class StarRating extends StatelessWidget {
         )
       ],
     ) :
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius ?? 20),
-            color: color ?? secondaryColor
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: paddingVertical ?? 5,
-                horizontal: paddingHorizontal ?? 10
+    Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(borderRadius ?? 20),
+          color: color ?? secondaryColor
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            vertical: paddingVertical ?? 5,
+            horizontal: paddingHorizontal ?? 10
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+                Icons.star,
+                size: starSize ?? 20,
+                color: starColor ?? Colors.yellow),
+            const SizedBox(width: 5),
+            Text(
+              '${double.parse(initialRating.toStringAsFixed(1))} / ${maxRating.toInt()}',
+              style: GoogleFonts.poppins().copyWith(
+                  color: textColor ?? Colors.white,
+                  fontSize: textSize ?? 12,
+                  fontWeight: FontWeight.w600
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                    Icons.star,
-                    size: starSize ?? 20,
-                    color: starColor ?? Colors.yellow),
-                const SizedBox(width: 5),
-                Text(
-                  '${double.parse(initialRating.toStringAsFixed(1))} / ${maxRating.toInt()}',
-                  style: GoogleFonts.poppins().copyWith(
-                      color: textColor ?? Colors.white,
-                      fontSize: textSize ?? 12,
-                      fontWeight: FontWeight.w600
-                  ),
-                ),
-              ],
-            ),
-          ),
-        )
-    ;
+          ],
+        ),
+      ),
+    );
   }
-
 }
