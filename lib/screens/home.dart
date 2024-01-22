@@ -142,9 +142,9 @@ class _HomeState extends State<Home> {
 
                                   return Transform.scale(
                                     scale: scaleFactor,
-                                    child: nowPlayingList!.isEmpty
-                                        ? const ShimmerHorizontal()
-                                        : CarouselItem(
+                                    child: nowPlayingList!.isEmpty ?
+                                    const ShimmerHorizontal() :
+                                    CarouselItem(
                                       movieItem: nowPlayingList![index],
                                       isSelected: isSelected,
                                       onItemTap: () {
