@@ -33,6 +33,11 @@ const String login = 'Login';
 const String seeAll = 'See All';
 const String httpError = 'Error retrieving data from API';
 const String released = 'Released';
+const String overview = 'Overview';
+const String cast = 'Cast';
+const String gallery = 'Gallery';
+const String relatedMovie = 'Related Movie';
+const String relatedSeries = 'Related Series';
 
 /// ENDPOINTS
 const String getNowPlayingList = '/movie/now_playing?';
@@ -42,14 +47,15 @@ const String getTvGenreList = '/genre/tv/list?';
 const String getOnTheAirList = '/tv/on_the_air?';
 const String getTopRatedTvList = '/tv/top_rated?';
 const String getTopRatedMovieList = '/movie/top_rated?';
-const String movieDetail = '/movie/';
+const String movie = '/movie/';
+const String movieImages = '/images';
 
 /// PARAMS
 const String language = 'language=';
 const String page = 'page=';
 const String region = 'region=';
 const String timezone = 'timezone=';
-const String appendToResponse = '&append_to_response=videos,images,similar,credits,external_ids';
+const String appendToResponse = '&append_to_response=videos,similar,credits,external_ids';
 
 /**
  * GENRES
