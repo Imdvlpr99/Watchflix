@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:watchflix/utils/constants.dart';
 import 'package:watchflix/utils/utils.dart';
 import 'package:watchflix/widgets/rounded_field.dart';
+import 'package:watchflix/widgets/star_rating.dart';
 
 import '../models/genre.dart';
 
@@ -13,6 +14,7 @@ class MovieDetailDesc extends StatelessWidget {
   final String? releaseStatus;
   final String? originalTitle;
   final bool? isReleased;
+  final double? initialRating;
   final List<Genre>? movieGenre;
 
   const MovieDetailDesc({
@@ -22,7 +24,8 @@ class MovieDetailDesc extends StatelessWidget {
     this.isReleased,
     this.movieGenre,
     this.releaseStatus,
-    this.originalTitle
+    this.originalTitle,
+    this.initialRating
   });
 
   @override
@@ -78,7 +81,17 @@ class MovieDetailDesc extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ) : const SizedBox(),
-            const SizedBox(height: 15),
+            const SizedBox(height: 5),
+            StarRating(
+              initialRating: initialRating!,
+              maxRating: 10,
+              isStarInside: true,
+              paddingHorizontal: 7,
+              paddingVertical: 2,
+              color: red,
+              textSize: 14,
+            ),
+            const SizedBox(height: 10),
             Center(
               child: LayoutBuilder(
                 builder: (context, constraint) {
