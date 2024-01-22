@@ -1,8 +1,8 @@
-import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
@@ -10,10 +10,16 @@ import 'package:watchflix/api/api_services.dart';
 import 'package:watchflix/utils/constants.dart';
 import 'package:watchflix/widgets/custom_app_bar.dart';
 import 'package:watchflix/widgets/movie_detail_desc.dart';
+import 'package:watchflix/widgets/people_item.dart';
+import 'package:watchflix/widgets/section_header.dart';
 
 import '../models/Movie.dart';
+import '../models/genre.dart';
+import '../models/images.dart';
 import '../utils/custom_dialog.dart';
 import '../utils/utils.dart';
+import '../widgets/custom_page_route.dart';
+import '../widgets/movie_vertical_item.dart';
 
 class DetailsMovieTv extends StatefulWidget {
   final bool isMovie;
@@ -34,6 +40,8 @@ class DetailsMovieTv extends StatefulWidget {
 class _DetailsMovieTvState extends State<DetailsMovieTv> {
   late final ApiServices _api;
   Movie? movieData;
+  List<Images>? movieImages;
+  List<Genre> movieGenreList = [];
 
   @override
   void initState() {
@@ -44,12 +52,20 @@ class _DetailsMovieTvState extends State<DetailsMovieTv> {
   void fetchData() async {
     try {
       movieData = null;
+      movieImages?.clear();
+      movieGenreList.clear();
       _api = ApiServices();
 
       Movie getMovieData = await _api.getMovieDetails(widget.movieId);
+      List<Images> getMovieImages = await _api.getMovieImages(widget.movieId);
+      List<Genre> getMovieGenreList = await _api.getMovieGenre('en');
+
       setState(() {
         movieData = getMovieData;
+        movieImages = getMovieImages;
+        movieGenreList = getMovieGenreList;
       });
+
     } catch (e) {
       _showErrorDialog(e.toString());
       Utils.getLogger().e(e);
@@ -95,12 +111,10 @@ class _DetailsMovieTvState extends State<DetailsMovieTv> {
                                               )
                                             ]
                                         ),
-                                        child: Center(
-                                          child: SvgPicture.asset(
-                                            'assets/images/youtube.svg',
-                                            width: 30,
-                                            height: 30,
-                                          ),
+                                        child: const Icon(
+                                          Iconsax.play_circle,
+                                          size: 30,
+                                          color: white,
                                         ),
                                       ),
                                     ),
@@ -125,7 +139,7 @@ class _DetailsMovieTvState extends State<DetailsMovieTv> {
                                             'assets/images/imdb.svg',
                                             width: 30,
                                             height: 30,
-                                            color: Colors.white,
+                                            colorFilter: const ColorFilter.mode(white, BlendMode.srcIn),
                                           ),
                                         ),
                                       ),
@@ -147,7 +161,7 @@ class _DetailsMovieTvState extends State<DetailsMovieTv> {
                                             ]
                                         ),
                                         child: const Icon(
-                                          Iconsax.link_26,
+                                          Iconsax.link5,
                                           size: 30,
                                           color: Colors.white,
                                         ),
@@ -271,6 +285,7 @@ class _DetailsMovieTvState extends State<DetailsMovieTv> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 10),
                       MovieDetailDesc(
@@ -279,14 +294,169 @@ class _DetailsMovieTvState extends State<DetailsMovieTv> {
                         isReleased: movieData?.status == released ? true : false,
                         releaseStatus: movieData?.status,
                         movieGenre: movieData?.genres,
-                      )
+                        originalTitle: movieData?.originalTitle,
+                        initialRating: movieData?.voteAverage,
+                      ),
+                      const SectionHeader(
+                        leftTitle: overview,
+                        rightTitle: '',
+                        disablePadding: true,
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        movieData?.overview ?? '',
+                        style: GoogleFonts.poppins().copyWith(
+                            color: white,
+                            fontSize: 14
+                        ),
+                      ),
+                      const SizedBox(height: 10),
                     ],
                   ),
+                ),
+                const SectionHeader(
+                  leftTitle: gallery,
+                  rightTitle: '',
+                ),
+                SizedBox(
+                    height: 200,
+                    child: ListView.separated(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      itemCount: movieImages?.isEmpty ?? true ? 3 : movieImages!.length,
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(width: 15);
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        if (movieImages == null || movieImages!.isEmpty) {
+                          return Shimmer.fromColors(
+                            baseColor: secondaryColor,
+                            highlightColor: Colors.grey,
+                            child: Container(
+                              height: 200,
+                              width: 350,
+                              decoration: BoxDecoration(
+                                color: secondaryColor,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Container(
+                            width: 350,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15)
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: CachedNetworkImage(
+                                imageUrl: '$baseImageUrlOriginal${movieImages?[index].filePath}',
+                                fit: BoxFit.cover,
+                                alignment: Alignment.center,
+                                width: double.infinity,
+                                height: double.infinity,
+                                placeholder: (context, url) => Shimmer.fromColors(
+                                  baseColor: secondaryColor,
+                                  highlightColor: Colors.grey,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: secondaryColor,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    )
+                ),
+                const SectionHeader(
+                  leftTitle: cast,
+                  rightTitle: seeAll,
+                ),
+                SizedBox(
+                    height: 220,
+                    child: ListView.separated(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      itemCount: movieData?.cast?.isEmpty ?? true ? 3 : movieData!.cast!.length,
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(width: 15);
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        if (movieData == null || movieData!.cast!.isEmpty) {
+                          return Shimmer.fromColors(
+                            baseColor: secondaryColor,
+                            highlightColor: Colors.grey,
+                            child: Container(
+                              height: 200,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                color: secondaryColor,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                          );
+                        } else {
+                          return PeopleItem(
+                              people: movieData!.cast![index]
+                          );
+                        }
+                      },
+                    )
+                ),
+                SectionHeader(
+                  leftTitle: widget.isMovie ? relatedMovie : relatedSeries,
+                  rightTitle: '',
+                ),
+                ListView.separated(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: movieData?.similar?.isEmpty ?? true ? 3 : movieData!.similar!.length,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: 15);
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    return movieData!.similar!.isEmpty ?
+                    Shimmer.fromColors(
+                      baseColor: secondaryColor,
+                      highlightColor: Colors.grey,
+                      child: Container(
+                        height: 200,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          color: secondaryColor,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ) :
+                    MovieVerticalItem(
+                      movieItem: movieData!.similar![index],
+                      genreList: movieGenreList,
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            CustomPageRoute(
+                              child: DetailsMovieTv(
+                                isMovie: true,
+                                movieId: movieData!.similar![index].id!,
+                                moviePoster: movieData!.similar![index].posterPath,
+                              ),
+                              direction: AxisDirection.left, // Specify the desired transition direction
+                            )
+                        );
+                      },
+                    );
+                  },
                 )
               ],
             ),
           ),
-          // CustomAppBar
           Positioned(
             top: 0,
             left: 0,
