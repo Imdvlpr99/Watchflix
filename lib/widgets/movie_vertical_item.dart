@@ -12,7 +12,7 @@ import '../models/genre.dart';
 class MovieVerticalItem extends StatelessWidget {
   final Movie movieItem;
   final List<Genre> genreList;
-  final Function? onTap;
+  final VoidCallback? onTap;
 
   const MovieVerticalItem({
     super.key,
@@ -152,6 +152,7 @@ class MovieVerticalItem extends StatelessWidget {
                             int maxVisibleItems = (constraints.maxWidth / containerWidth).floor();
 
                             if (genreWidgets.isNotEmpty && genreWidgets.length > maxVisibleItems) {
+                              genreWidgets = genreWidgets.sublist(0, maxVisibleItems); // Show only maxVisibleItems
                               genreWidgets.add(
                                 Container(
                                   height: 30,
