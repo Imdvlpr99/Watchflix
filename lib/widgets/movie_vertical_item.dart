@@ -111,7 +111,9 @@ class MovieVerticalItem extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 10, right: 10, top: 7, bottom: 2),
                                 child: Text(
-                                  Utils.formatDateString(movieItem.releaseDate.toString(), 'yyyy-MM-dd', 'yyyy'),
+                                  movieItem.releaseDate!.isNotEmpty ?
+                                  Utils.formatDateString(movieItem.releaseDate.toString(), 'yyyy-MM-dd', 'yyyy') :
+                                  '',
                                   style: GoogleFonts.poppins().copyWith(
                                       color: Colors.white,
                                       fontSize: 12,
