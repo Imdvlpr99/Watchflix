@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:watchflix/models/Movie.dart';
 import 'package:watchflix/models/genre.dart';
+import 'package:watchflix/models/images.dart';
 import 'package:watchflix/utils/constants.dart';
 import 'package:watchflix/utils/utils.dart';
 
@@ -201,7 +202,7 @@ class ApiServices {
     String questionMark = '?';
     String lang = 'en-US';
     try {
-      final Uri uri = Uri.parse('$baseUrl$movieDetail$movieId$questionMark$language$lang$appendToResponse');
+      final Uri uri = Uri.parse('$baseUrl$movie$movieId$questionMark$language$lang$appendToResponse');
       final response = await http.get(
         uri,
         headers: <String, String>{
@@ -211,15 +212,41 @@ class ApiServices {
       );
 
       final Map<String, dynamic> data = json.decode(response.body);
-      final Movie movie = Movie.fromJson(data);
+      final Movie movieData = Movie.fromJson(data);
       Utils.getLogger().d(data);
       if (response.statusCode == 200) {
-        return movie;
+        return movieData;
       } else {
-        return movie;
+        return movieData;
       }
     } catch (e) {
       Utils.getLogger().e('Error: $e');
+      rethrow;
+    }
+  }
+
+  Future<List<Images>> getMovieImages(int movieId) async {
+    try {
+      final Uri uri = Uri.parse('$baseUrl$movie$movieId$movieImages');
+      final response = await http.get(
+          uri,
+          headers: <String, String> {
+            'Authorization': 'Bearer $accessToken',
+            'Content-Type': 'application/json',
+          });
+
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      if (response.statusCode == 200) {
+        final List<dynamic> results = json['backdrops'] as List<dynamic>;
+        List<Images> images = results.map((item) => Images.fromJson(item)).toList();
+        return images;
+      } else {
+        String errorMessage = json['status_message'] as String;
+        return Future.error(errorMessage);
+      }
+
+    } catch (e) {
+      Utils.getLogger().e('Error : $e');
       rethrow;
     }
   }
