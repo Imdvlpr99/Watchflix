@@ -81,6 +81,7 @@ class _DetailsMovieTvState extends State<DetailsMovieTv> {
         children: [
           SingleChildScrollView(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(
                   height: 500 + MediaQuery.of(context).padding.top,
@@ -314,146 +315,158 @@ class _DetailsMovieTvState extends State<DetailsMovieTv> {
                     ],
                   ),
                 ),
-                const SectionHeader(
-                  leftTitle: gallery,
-                  rightTitle: '',
-                ),
-                SizedBox(
-                    height: 200,
-                    child: ListView.separated(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      itemCount: movieImages?.isEmpty ?? true ? 3 : movieImages!.length,
-                      scrollDirection: Axis.horizontal,
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(width: 15);
-                      },
-                      itemBuilder: (BuildContext context, int index) {
-                        if (movieImages == null || movieImages!.isEmpty) {
-                          return Shimmer.fromColors(
-                            baseColor: secondaryColor,
-                            highlightColor: Colors.grey,
-                            child: Container(
-                              height: 200,
-                              width: 350,
-                              decoration: BoxDecoration(
-                                color: secondaryColor,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                          );
-                        } else {
-                          return Container(
-                            width: 350,
-                            height: 200,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15)
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: CachedNetworkImage(
-                                imageUrl: '$baseImageUrlOriginal${movieImages?[index].filePath}',
-                                fit: BoxFit.cover,
-                                alignment: Alignment.center,
-                                width: double.infinity,
-                                height: double.infinity,
-                                placeholder: (context, url) => Shimmer.fromColors(
+                const SizedBox(height: 10),
+                if (movieImages != null && movieImages?.isNotEmpty == true)
+                  Column(
+                    children: [
+                      const SectionHeader(
+                        leftTitle: gallery,
+                        rightTitle: '',
+                      ),
+                      SizedBox(
+                          height: 200,
+                          child: ListView.separated(
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            itemCount: movieImages?.isEmpty ?? true ? 3 : movieImages!.length,
+                            scrollDirection: Axis.horizontal,
+                            separatorBuilder: (BuildContext context, int index) {
+                              return const SizedBox(width: 15);
+                            },
+                            itemBuilder: (BuildContext context, int index) {
+                              if (movieImages == null || movieImages!.isEmpty) {
+                                return Shimmer.fromColors(
                                   baseColor: secondaryColor,
                                   highlightColor: Colors.grey,
                                   child: Container(
+                                    height: 200,
+                                    width: 350,
                                     decoration: BoxDecoration(
                                       color: secondaryColor,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                      },
-                    )
-                ),
+                                );
+                              } else {
+                                return Container(
+                                  width: 350,
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15)
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: CachedNetworkImage(
+                                      imageUrl: '$baseImageUrlOriginal${movieImages?[index].filePath}',
+                                      fit: BoxFit.cover,
+                                      alignment: Alignment.center,
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      placeholder: (context, url) => Shimmer.fromColors(
+                                        baseColor: secondaryColor,
+                                        highlightColor: Colors.grey,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: secondaryColor,
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          )
+                      ),
+                    ],
+                  ),
+                const SizedBox(height: 10),
                 const SectionHeader(
                   leftTitle: cast,
                   rightTitle: seeAll,
                 ),
                 SizedBox(
-                    height: 220,
-                    child: ListView.separated(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      itemCount: movieData?.cast?.isEmpty ?? true ? 3 : movieData!.cast!.length,
-                      scrollDirection: Axis.horizontal,
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(width: 15);
-                      },
-                      itemBuilder: (BuildContext context, int index) {
-                        if (movieData == null || movieData!.cast!.isEmpty) {
-                          return Shimmer.fromColors(
+                  height: 260,
+                  child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    itemCount: movieData?.cast?.isEmpty ?? true ? 3 : movieData!.cast!.length,
+                    scrollDirection: Axis.horizontal,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(width: 15);
+                    },
+                    itemBuilder: (BuildContext context, int index) {
+                      if (movieData == null || movieData!.cast!.isEmpty) {
+                        return Shimmer.fromColors(
+                          baseColor: secondaryColor,
+                          highlightColor: Colors.grey,
+                          child: Container(
+                            height: 200,
+                            width: 200,
+                            decoration: BoxDecoration(
+                              color: secondaryColor,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return PeopleItem(
+                            people: movieData!.cast![index]
+                        );
+                      }
+                    },
+                  ),
+                ),
+                if (movieData?.similar?.isNotEmpty == true)
+                  Column(
+                    children: [
+                      SectionHeader(
+                        leftTitle: widget.isMovie ? relatedMovie : relatedSeries,
+                        rightTitle: '',
+                      ),
+                      ListView.separated(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: movieData?.similar?.isEmpty ?? true ? 3 : movieData!.similar!.length,
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(height: 15);
+                        },
+                        itemBuilder: (BuildContext context, int index) {
+                          return movieData!.similar!.isEmpty ?
+                          Shimmer.fromColors(
                             baseColor: secondaryColor,
                             highlightColor: Colors.grey,
                             child: Container(
                               height: 200,
-                              width: 200,
+                              width: 150,
                               decoration: BoxDecoration(
                                 color: secondaryColor,
                                 borderRadius: BorderRadius.circular(15),
                               ),
                             ),
+                          ) :
+                          MovieVerticalItem(
+                            movieItem: movieData!.similar![index],
+                            genreList: movieGenreList,
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  CustomPageRoute(
+                                    child: DetailsMovieTv(
+                                      isMovie: true,
+                                      movieId: movieData!.similar![index].id!,
+                                      moviePoster: movieData!.similar![index].posterPath,
+                                    ),
+                                    direction: AxisDirection.left, // Specify the desired transition direction
+                                  )
+                              );
+                            },
                           );
-                        } else {
-                          return PeopleItem(
-                              people: movieData!.cast![index]
-                          );
-                        }
-                      },
-                    )
-                ),
-                SectionHeader(
-                  leftTitle: widget.isMovie ? relatedMovie : relatedSeries,
-                  rightTitle: '',
-                ),
-                ListView.separated(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: movieData?.similar?.isEmpty ?? true ? 3 : movieData!.similar!.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: 15);
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    return movieData!.similar!.isEmpty ?
-                    Shimmer.fromColors(
-                      baseColor: secondaryColor,
-                      highlightColor: Colors.grey,
-                      child: Container(
-                        height: 200,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          color: secondaryColor,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                    ) :
-                    MovieVerticalItem(
-                      movieItem: movieData!.similar![index],
-                      genreList: movieGenreList,
-                      onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            CustomPageRoute(
-                              child: DetailsMovieTv(
-                                isMovie: true,
-                                movieId: movieData!.similar![index].id!,
-                                moviePoster: movieData!.similar![index].posterPath,
-                              ),
-                              direction: AxisDirection.left, // Specify the desired transition direction
-                            )
-                        );
-                      },
-                    );
-                  },
-                )
+                        },
+                      )
+                    ],
+                  )
               ],
             ),
           ),
