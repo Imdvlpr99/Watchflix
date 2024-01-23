@@ -386,7 +386,7 @@ class _DetailsMovieTvState extends State<DetailsMovieTv> {
                   rightTitle: seeAll,
                 ),
                 SizedBox(
-                  height: 260,
+                  height: 235,
                   child: ListView.separated(
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     itemCount: movieData?.cast?.isEmpty ?? true ? 3 : movieData!.cast!.length,
