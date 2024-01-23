@@ -51,6 +51,8 @@ class PeopleItem extends StatelessWidget {
           Text(
             people.originalName,
             textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: GoogleFonts.poppins().copyWith(
                 color: white,
                 fontSize: 14,
@@ -60,6 +62,8 @@ class PeopleItem extends StatelessWidget {
           Text(
             people.character,
             textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: GoogleFonts.poppins().copyWith(
                 color: white,
                 fontSize: 10
