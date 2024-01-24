@@ -148,7 +148,6 @@ class _HomeState extends State<Home> {
                                       movieItem: nowPlayingList![index],
                                       isSelected: isSelected,
                                       onItemTap: () {
-                                        Utils.getLogger().d(nowPlayingList![index].id!);
                                         Navigator.of(context, rootNavigator: true).push(
                                           CustomPageRoute(
                                             child: DetailsMovieTv(
