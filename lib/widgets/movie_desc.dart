@@ -37,8 +37,10 @@ class MovieDesc extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: Text(
+                  movieItem.originalTitle != movieItem.title ?
+                  movieItem.title!.toString() :
                   movieItem.originalTitle.toString(),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins().copyWith(
