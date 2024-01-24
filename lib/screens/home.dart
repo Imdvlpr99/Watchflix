@@ -148,7 +148,6 @@ class _HomeState extends State<Home> {
                                       movieItem: nowPlayingList![index],
                                       isSelected: isSelected,
                                       onItemTap: () {
-                                        Utils.getLogger().d(nowPlayingList![index].id!);
                                         Navigator.of(context, rootNavigator: true).push(
                                           CustomPageRoute(
                                             child: DetailsMovieTv(
@@ -198,6 +197,18 @@ class _HomeState extends State<Home> {
                               MovieVerticalItem(
                                 movieItem: popularList![index],
                                 genreList: movieGenreList,
+                                onTap: () {
+                                  Navigator.of(context, rootNavigator: true).push(
+                                    CustomPageRoute(
+                                      child: DetailsMovieTv(
+                                        isMovie: true,
+                                        movieId: popularList![index].id!,
+                                        moviePoster: popularList![index].posterPath,
+                                      ),
+                                      direction: AxisDirection.left, // Specify the desired transition direction
+                                    ),
+                                  );
+                                },
                               );
                             },
                           ),

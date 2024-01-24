@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:watchflix/models/people.dart';
@@ -41,6 +42,23 @@ class PeopleItem extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: secondaryColor,
                       borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
+                errorWidget: (context, url, error) => Container(
+                  width: 100,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(15)
+                  ),
+                  child: Center(
+                    child: SvgPicture.asset(
+                      people.gender == 1 ? 'assets/images/ava_male.svg' :
+                      people.gender == 2 ? 'assets/images/ava_female.svg' :
+                      'assets/images/user_ava.svg',
+                      width: 55,
+                      height: 55,
                     ),
                   ),
                 ),
