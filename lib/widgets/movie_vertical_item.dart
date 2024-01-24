@@ -96,6 +96,8 @@ class MovieVerticalItem extends StatelessWidget {
                         Text(
                           movieItem.originalTitle != movieItem.title ? movieItem.title!.toString() :
                           movieItem.originalTitle!.toString(),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.poppins().copyWith(
                               color: Colors.white,
                               fontSize: 16,
