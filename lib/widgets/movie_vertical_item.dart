@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:watchflix/utils/constants.dart';
 import 'package:watchflix/utils/utils.dart';
+import 'package:watchflix/widgets/rounded_field.dart';
 import 'package:watchflix/widgets/shimmer_vertical.dart';
 import 'package:watchflix/widgets/star_rating.dart';
 
@@ -57,7 +59,7 @@ class MovieVerticalItem extends StatelessWidget {
                 height: 160,
                 width: 120,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15)
+                    borderRadius: BorderRadius.circular(10)
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
@@ -67,7 +69,21 @@ class MovieVerticalItem extends StatelessWidget {
                     width: double.infinity,
                     height: double.infinity,
                     placeholder: (context, url) => const ShimmerVertical(),
-                    errorWidget: (context, url, error) => const ShimmerVertical(),
+                    errorWidget: (context, url, error) => Container(
+                      width: 120,
+                      height: 160,
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: Center(
+                        child: SvgPicture.asset(
+                          'assets/images/film_placeholder.svg',
+                          width: 75,
+                          height: 75,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -78,6 +94,7 @@ class MovieVerticalItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget> [
                         Text(
+                          movieItem.originalTitle != movieItem.title ? movieItem.title!.toString() :
                           movieItem.originalTitle!.toString(),
                           style: GoogleFonts.poppins().copyWith(
                               color: Colors.white,
@@ -102,26 +119,15 @@ class MovieVerticalItem extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 5),
-                            Container(
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: mainColor
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 10, right: 10, top: 7, bottom: 2),
-                                child: Text(
-                                  movieItem.releaseDate!.isNotEmpty ?
-                                  Utils.formatDateString(movieItem.releaseDate.toString(), 'yyyy-MM-dd', 'yyyy') :
-                                  '',
-                                  style: GoogleFonts.poppins().copyWith(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600
-                                  ),
-                                ),
-                              ),
-                            ),
+                            RoundedField(
+                              text: movieItem.releaseDate!.isNotEmpty ?
+                              Utils.formatDateString(movieItem.releaseDate.toString(), 'yyyy-MM-dd', 'yyyy') :
+                              'Unknown',
+                              fontWeight: FontWeight.w600,
+                              textSize: 12,
+                              paddingVertical: 5,
+                              paddingHorizontal: 10,
+                            )
                           ],
                         ),
                         const SizedBox(height: 10),
@@ -131,23 +137,12 @@ class MovieVerticalItem extends StatelessWidget {
                             double containerWidth = constraints.maxWidth * containerWidthPercentage;
 
                             List<Widget> genreWidgets = genreNames.map((item) {
-                              return Container(
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: mainColor,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 10, right: 10, top: 7, bottom: 2),
-                                  child: Text(
-                                    item!,
-                                    style: GoogleFonts.poppins().copyWith(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
+                              return RoundedField(
+                                text: item!,
+                                fontWeight: FontWeight.w600,
+                                textSize: 12,
+                                paddingVertical: 5,
+                                paddingHorizontal: 10,
                               );
                             }).toList();
 
@@ -156,23 +151,12 @@ class MovieVerticalItem extends StatelessWidget {
                             if (genreWidgets.isNotEmpty && genreWidgets.length > maxVisibleItems) {
                               genreWidgets = genreWidgets.sublist(0, maxVisibleItems); // Show only maxVisibleItems
                               genreWidgets.add(
-                                Container(
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: mainColor,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 10, right: 10, top: 7, bottom: 2),
-                                    child: Text(
-                                      'etc',
-                                      style: GoogleFonts.poppins().copyWith(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
+                                const RoundedField(
+                                  text: 'etc',
+                                  fontWeight: FontWeight.w600,
+                                  textSize: 12,
+                                  paddingVertical: 5,
+                                  paddingHorizontal: 10,
                                 ),
                               );
                             }
